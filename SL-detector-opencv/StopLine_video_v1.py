@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on thur Feb 25 10:12:33 2021
+Created on thu Feb 25 10:12:33 2021
 
 @author: thlin002
 """
@@ -28,7 +26,7 @@ RL_file.close()
 # ----------------noline fucntion----------------------
 def noline(kalman ,kCount, y_k, im, frameNum, SL_file, videoOut):
     if frameNum <= endFrame and frameNum >= startFrame:
-        SL_file.write(str( im.shape[0] - int(y_k[0][0] + .5) ) + "\n")
+        SL_file.write(str( im.shape[0] - int(y_k[0][0] + .5) ) + "\n")  # write the 
         kCount += 1
     if kCount > kThres:
         kalman.statePost = np.array( [im.shape[0]*0.50, 0] ).reshape((2,1))
@@ -231,10 +229,12 @@ while flag:
                 tanTheta = math.tan( (y2-y1)/(x2-x1) )
                 angle = math.atan(tanTheta) * 180/pi
                 if abs(angle) < 2.5 and abs(angle) >= 0:
+                    # Check if the area around the line is a part of the road
+                    # if the mean brightness is too high, the area might includes the sky or a white car
                     q1 = (x1 - 25, y1)
                     q2 = (x2 + 25, y1)
                     q3 = (x2 + 25, y1- 50.)     # trying different sampling area
-                    q4 = (x1 - 25, y1- 50.)	#
+                    q4 = (x1 - 25, y1- 50.)
                     #q3 = (x2, y1-min( abs(x2-x1)*2.5, 50. ))
                     #q4 = (x1, y1-min( abs(x2-x1)*2.5, 50. ))
                     lineVertices = np.array([[q1, q2, q3, q4]], dtype=np.int32)

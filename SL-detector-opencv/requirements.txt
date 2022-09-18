@@ -1,3 +1,4 @@
+# some of these versions are not compatible with apple m1 chip
 numpy
 Pillow
 opencv-python==4.5.1.*
